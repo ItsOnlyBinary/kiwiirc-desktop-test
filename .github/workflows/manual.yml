@@ -5,19 +5,44 @@ jobs:
   build_on_mac:
     runs-on: macOS-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup node
+      uses: actions/setup-node@v2
       with:
         node-version: '14'
-    - run: yarn install
-    - run: yarn build:dist
+    - name: Install npm packages
+      run: yarn install
+    - name: Build app packages
+      run: yarn build:dist
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/*.{dmg,deb,rpm,exe,zip}
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
   build_on_linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup node
+      uses: actions/setup-node@v2
       with:
         node-version: '14'
-    - run: sudo apt-get install rpm
-    - run: yarn install
-    - run: yarn build:dist --linux --win
+    - name: Install ubuntu packages 
+      run: sudo apt-get install rpm
+    - name: Install npm packages
+      run: yarn install
+    - name: Build app packages
+      run: yarn build:dist --linux --win
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/*.{dmg,deb,rpm,exe,zip}
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
