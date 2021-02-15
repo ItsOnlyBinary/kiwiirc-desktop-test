@@ -40,3 +40,9 @@ for more info see [cli commands](https://www.electron.build/cli)
 ``` bash
 $ yarn build:dist --dir --x64
 ```
+
+
+## MacOS Tips
+
+skip code signing
+`yarn build:dist --dir -c.mac.identity=null`
