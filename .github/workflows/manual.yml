@@ -33,7 +33,7 @@ jobs:
       with:
         node-version: '14'
     - name: Install ubuntu packages 
-      run: sudo apt-get install rpm
+      run: sudo apt-get install rpm wine
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
