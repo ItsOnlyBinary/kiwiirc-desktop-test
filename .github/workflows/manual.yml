@@ -14,7 +14,7 @@ jobs:
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
-      run: electron-builder
+      run: yarn build:dist
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
@@ -37,7 +37,7 @@ jobs:
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
-      run: electron-builder --linux --win
+      run: yarn build:dist --linux --win
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
