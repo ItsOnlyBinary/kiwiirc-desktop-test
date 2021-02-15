@@ -14,7 +14,7 @@ jobs:
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
-      run: yarn build:dist
+      run: yarn build:dist --publish=never
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
@@ -33,11 +33,13 @@ jobs:
       with:
         node-version: '14'
     - name: Install ubuntu packages 
+      run: dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+    - name: Install ubuntu packages 
       run: sudo apt-get install rpm wine
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
-      run: yarn build:dist --linux --win
+      run: yarn build:dist --linux --win --publish=never
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
