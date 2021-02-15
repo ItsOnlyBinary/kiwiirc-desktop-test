@@ -1,0 +1,23 @@
+name: Manual build
+on:
+  workflow_dispatch:
+jobs:
+  build_on_mac:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - run: yarn install
+    - run: yarn build:dist
+  build_on_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - run: sudo apt-get install rpm
+    - run: yarn install
+    - run: yarn build:dist --linux --win
