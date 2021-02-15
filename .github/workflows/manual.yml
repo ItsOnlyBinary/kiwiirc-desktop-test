@@ -33,9 +33,7 @@ jobs:
       with:
         node-version: '14'
     - name: Install ubuntu packages 
-      run: dpkg --add-architecture i386 && apt-get update && apt-get install wine32
-    - name: Install ubuntu packages 
-      run: sudo apt-get install rpm wine
+      run: sudo apt-get install rpm wine wine32
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
