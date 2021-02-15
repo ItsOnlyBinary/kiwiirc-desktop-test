@@ -33,11 +33,32 @@ jobs:
       with:
         node-version: '14'
     - name: Install ubuntu packages 
-      run: sudo apt-get install rpm wine wine32
+      run: sudo apt-get install rpm
     - name: Install npm packages
       run: yarn install
     - name: Build app packages
-      run: yarn build:dist --linux --win --publish=never
+      run: yarn build:dist --publish=never
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/*.{dmg,deb,rpm,exe,zip}
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
+  build_on_windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Install npm packages
+      run: yarn install
+    - name: Build app packages
+      run: yarn build:dist --publish=never
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
